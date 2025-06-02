@@ -1,6 +1,7 @@
+import {startREPL} from "./repl.js";
 
 function main() {
-    console.log("Hello, wsrld!");
+    startREPL();
 }
 
 main();
