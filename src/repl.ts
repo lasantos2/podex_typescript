@@ -1,5 +1,8 @@
 
 import { createInterface } from "readline";
+import { commandExit } from "./command_exit.js";
+import { CLICommand } from "./command.js";
+import { commandHelp } from "./command_help.js";
 
 
 const rl = createInterface({
@@ -23,21 +26,36 @@ export function cleanInput(input:string): string[]{
     return filterResult;
 }
 
+export function getCommands(): Record<string, CLICommand> {
+    return {
+        exit:{
+            name: "exit",
+            description: "Exits the pokedex",
+            callback: commandExit,
+        },
+        help:{
+            name: "help",
+            description: "Displays a help message",
+            callback: commandHelp,
+        },
+        // add more commands here
+    };
+}
+
 export function startREPL(){
     rl.prompt();
     let line: string = "";
 
     rl.on('line', (line:string)=>{
         let args = cleanInput(line.toLowerCase())
-        if (args.length <0 ){
-            rl.prompt();
+
+
+        try {
+            getCommands()[args[0]].callback(getCommands());
+        } catch (err) {
+            console.log(err);
         }
-        else{
-            console.log(`Your command was: ${args[0]}`);
-        }
+        
         rl.prompt();
-    }).on('close', ()=> {
-        console.log("Have a great day!");
-        process.exit(0);
     });
 }
