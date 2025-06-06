@@ -18,12 +18,8 @@ export class PokeAPI {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const dataRs = await response.json();
-
-        console.log(dataRs);
-
-        
-        return {} as ShallowLocations;
+        const dataRs:ShallowLocations = await response.json();
+        return dataRs;
     }
 
     async fetchLocation(locationName: string): Promise<Location> {
