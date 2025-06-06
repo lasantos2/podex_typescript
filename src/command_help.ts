@@ -1,10 +1,12 @@
-import { State } from "./state.js";
+import type { State } from "./state.js";
 
-export async function commandHelp(state: State){
-    console.log("Welcome to the Pokedex!");
-    console.log("Usage:\n");
-
-    Object.entries(state.commands).forEach(([key, data]) => {
-    console.log(`${data.name}: ${data.description}`);
-});
+export async function commandHelp(state: State) {
+  console.log();
+  console.log("Welcome to the Pokedex!");
+  console.log("Usage:");
+  console.log();
+  for (const cmd of Object.values(state.commands)) {
+    console.log(`${cmd.name}: ${cmd.description}`);
+  }
+  console.log();
 }
