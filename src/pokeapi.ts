@@ -1,11 +1,21 @@
+import { Cache } from "./pokecache.js";
+
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
 
+  #cacheLocations = new Cache(10000);
+  #cacheLocation = new Cache(10000);
   constructor() {}
 
   async fetchLocations(pageURL?: string): Promise<ShallowLocations> {
     const url = pageURL || `${PokeAPI.baseURL}/location-area`;
-    console.log(url);
+    let locations: ShallowLocations;
+
+    console.log("URL: " + url);
+
+    locations = this.#cacheLocations.get<ShallowLocations>(url);
+
+    if (locations !== undefined) return locations;
 
     try {
       const resp = await fetch(url);
@@ -14,7 +24,8 @@ export class PokeAPI {
         throw new Error(`${resp.status} ${resp.statusText}`);
       }
 
-      const locations: ShallowLocations = await resp.json();
+      locations = await resp.json();
+      this.#cacheLocations.add<ShallowLocations>(url, locations);
       return locations;
     } catch (e) {
       throw new Error(`Error fetching locations: ${(e as Error).message}`);
@@ -24,6 +35,13 @@ export class PokeAPI {
   async fetchLocation(locationName: string): Promise<Location> {
     const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
 
+    let location: Location;
+
+    location = this.#cacheLocation.get<Location>(locationName);
+
+    if (location !== undefined) return location as Location;
+
+
     try {
       const resp = await fetch(url);
 
@@ -31,7 +49,8 @@ export class PokeAPI {
         throw new Error(`${resp.status} ${resp.statusText}`);
       }
 
-      const location: Location = await resp.json();
+      location = await resp.json();
+      this.#cacheLocation.add<Location>(url,location);
       return location;
     } catch (e) {
       throw new Error(
