@@ -9,13 +9,14 @@ export class PokeAPI {
 
   async fetchLocations(pageURL?: string): Promise<ShallowLocations> {
     const url = pageURL || `${PokeAPI.baseURL}/location-area`;
-    let locations: ShallowLocations;
+    let locations: any;
 
-    console.log("URL: " + url);
 
     locations = this.#cacheLocations.get<ShallowLocations>(url);
 
-    if (locations !== undefined) return locations;
+    if (locations !== undefined) {
+      return locations.val
+    }
 
     try {
       const resp = await fetch(url);
@@ -35,9 +36,9 @@ export class PokeAPI {
   async fetchLocation(locationName: string): Promise<Location> {
     const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
 
-    let location: ShallowLocations;
+    let location: any;
 
-    location = this.#cacheLocation.get<ShallowLocations>(locationName);
+    location = this.#cacheLocation.get<Location>(locationName);
 
     if (location !== undefined) return location;
 

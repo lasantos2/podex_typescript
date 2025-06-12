@@ -4,6 +4,9 @@ export async function commandMapForward(state: State) {
 
   let locations = await state.pokeAPI.fetchLocations(state.nextLocationsURL);
 
+  if (locations === undefined) throw new Error("no locations found");
+
+
   state.nextLocationsURL = locations.next;
   state.prevLocationsURL = locations.previous;
 

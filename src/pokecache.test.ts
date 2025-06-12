@@ -1,5 +1,7 @@
 import { Cache } from "./pokecache.js";
 
+import {describe, expect, test} from "vitest";
+
 test.concurrent.each([
   {
     key: "https://example.com",
