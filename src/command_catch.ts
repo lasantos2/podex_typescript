@@ -5,17 +5,21 @@ export async function commandCatch(state:State, ...name: string[]){
   let pokemon: any;
 
   try {
-    pokemon = state.pokeAPI.fetchPokemon(name[0]);
+    pokemon = await state.pokeAPI.fetchPokemon(name[0]);
   } catch (e) {
     throw new Error("Unable to finish API key");
   }
 
   let experience = pokemon.base_experience;
-  console.log(experience);
 
-  let catchRatio = 1;
-  if (catchRatio >= 0.5) {
-    console.log(`${name[0]} has been caught`);
+
+  let catchRate = experience;
+  let catchChance = (catchRate * (255 - pokemon.stats[0].base_stat))/ 255;
+  let random_roll = Math.floor(Math.random() * (Math.floor(255) - (Math.ceil(1) + 1) + Math.ceil(1)));
+
+  if (random_roll <= catchChance) {
+    console.log(`${name[0]} has been caught!`);
+    console.log(`You may now inspect it with the inspect command`);
     state.pokedex[name[0]] = pokemon;
   } else {
     console.log(`${name} has got away`);
