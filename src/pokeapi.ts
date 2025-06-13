@@ -2,7 +2,7 @@ import { Cache } from "./pokecache.js";
 
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
-
+  private static readonly pokebaseUrl = "https://pokeapi.co/api/v2/pokemon/"
   #cacheLocations = new Cache(10000);
   #cacheLocation = new Cache(10000);
   constructor() {}
@@ -58,6 +58,23 @@ export class PokeAPI {
       throw new Error(
         `Error fetching location '${locationName}': ${(e as Error).message}`,
       );
+    }
+  }
+
+  async fetchPokemon(pokemonName: string): Promise<Pokemon> {
+    let url = `${PokeAPI.pokebaseUrl}/${pokemonName}`;
+    let pokemon: any;
+    
+    try {
+      const resp = await fetch(url);
+
+      if (!resp.ok) {
+        throw new Error("Pokemon unable to fetch");
+      }
+      pokemon = await resp.json();
+      return pokemon;
+    } catch(e) {
+      throw new Error("Unable to fetch url");
     }
   }
 }
@@ -124,3 +141,32 @@ export type Location = {
     }[];
   }[];
 };
+
+
+export type Pokemon = {
+  name: string;
+  base_experience: number;
+}
+
+//export interface Root {
+//  abilities: Ability[]
+//  base_experience: number
+//  cries: Cries
+//  forms: Form[]
+//  game_indices: Index[]
+//  height: number
+//  held_items: HeldItem[]
+//  id: number
+//  is_default: boolean
+//  location_area_encounters: string
+//  moves: Mfe[]
+//  name: string
+//  order: number
+//  past_abilities: PastAbility[]
+//  past_types: any[]
+//  species: Species
+//  sprites: Sprites
+//  stats: Stat[]
+//  types: Type[]
+//  weight: number
+//}
