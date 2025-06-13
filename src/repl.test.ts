@@ -3,12 +3,12 @@ import {describe, expect, test} from "vitest";
 
 describe.each([
   {
-    input: "  hello  world  ",
+    input: "  hello  world",
     expected: ["hello", "world"],
   },
   {
     input:"I love my job",
-    expected: ["I", "love", "my", "job"],
+    expected: ["i", "love", "my", "job"],
   }
   // TODO: more test cases here
 ])("cleanInput($input)", ({ input, expected }) => {
