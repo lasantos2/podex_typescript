@@ -1,6 +1,6 @@
 import type { State } from "./state.js"
 
-export async function commandCatch(state:State, name: string[]){
+export async function commandCatch(state:State, ...name: string[]){
   console.log(`Throwing a Pokeball at ${name[0]}...`)
   let pokemon: any;
 

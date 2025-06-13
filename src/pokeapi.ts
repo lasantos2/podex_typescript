@@ -144,29 +144,37 @@ export type Location = {
 
 
 export type Pokemon = {
-  name: string;
-  base_experience: number;
+  base_experience: number
+  height: number
+  id: number
+  is_default: boolean
+  location_area_encounters: string
+  name: string
+  order: number
+  past_types: any[]
+  stats: Stat[]
+  types: Type[]
+  weight: number
 }
 
-//export interface Root {
-//  abilities: Ability[]
-//  base_experience: number
-//  cries: Cries
-//  forms: Form[]
-//  game_indices: Index[]
-//  height: number
-//  held_items: HeldItem[]
-//  id: number
-//  is_default: boolean
-//  location_area_encounters: string
-//  moves: Mfe[]
-//  name: string
-//  order: number
-//  past_abilities: PastAbility[]
-//  past_types: any[]
-//  species: Species
-//  sprites: Sprites
-//  stats: Stat[]
-//  types: Type[]
-//  weight: number
-//}
+export type Stat = {
+  base_stat: number
+  effort: number
+  stat: Stat2
+}
+
+export type Stat2 = {
+  name: string
+  url: string
+}
+
+export type Type = {
+  slot: number
+  type: Type2
+}
+
+export type Type2 = {
+  name: string
+  url: string
+}
+

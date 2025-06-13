@@ -23,7 +23,7 @@ export async function startREPL(state: State) {
     }
 
     try {
-      await cmd.callback(state, args);
+      await cmd.callback(state, ...args);
     } catch (e) {
       console.log((e as Error).message);
     }

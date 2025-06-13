@@ -1,6 +1,6 @@
 import type { State } from "./state.js";
 
-export async function commandExplore(state: State , args: string[]) {
+export async function commandExplore(state: State , ...args: string[]) {
 
   const location_name = args[0];
   console.log(`Exploring ${location_name}...`)
