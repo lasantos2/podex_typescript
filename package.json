@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest --run",
+    "test_cache": "vitest --run src/pokecache.test.ts",
     "build": "npx tsc",
     "start": "node dist/main.js",
     "dev": "npx tsc && node dist/main.js"

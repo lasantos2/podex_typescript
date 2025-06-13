@@ -15,7 +15,7 @@ export class PokeAPI {
     locations = this.#cacheLocations.get<ShallowLocations>(url);
 
     if (locations !== undefined) {
-      return locations.val
+      return locations
     }
 
     try {
@@ -27,6 +27,7 @@ export class PokeAPI {
 
       locations = await resp.json();
       this.#cacheLocations.add<ShallowLocations>(url, locations);
+      console.log(locations);
       return locations;
     } catch (e) {
       throw new Error(`Error fetching locations: ${(e as Error).message}`);

@@ -15,17 +15,14 @@ export class Cache {
     }
 
     #startReapLoo() {
-        this.#reapIntervalId = setInterval(() => this.#reap, this.#interval);
+        this.#reapIntervalId = setInterval(()=>{this.#reap()}, this.#interval);
     }
 
     #reap() {
-
-        console.log("In #reap");
         this.#cache.forEach(
             (value, key) => {
                 if (value.createdAt <= (Date.now() - this.#interval)) {
                     this.#cache.delete(key);
-                    console.log("Got deleted");
                 }
             }
         )
@@ -48,7 +45,7 @@ export class Cache {
     }
 
     get<T>(key: string): any | undefined {
-
-        return this.#cache.get(key);
+        if (!this.#cache.get(key)) return undefined;
+        return this.#cache.get(key)?.val;
     }
 }

@@ -8,7 +8,7 @@ describe.each([
   },
   {
     input:"I love my job",
-    expected: ["I", "love", "my", "job"],
+    expected: ["i", "love", "my", "job"],
   }
   // TODO: more test cases here
 ])("cleanInput($input)", ({ input, expected }) => {
